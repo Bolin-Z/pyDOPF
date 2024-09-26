@@ -24,7 +24,7 @@ class Particle:
 class LLSO:
     def __init__(
         self,
-        net_id:int,
+        net_id:str,
         x_upper_bound:list[float],
         x_lower_bound:list[float],
         swarm_size:int,

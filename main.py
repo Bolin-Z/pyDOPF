@@ -4,6 +4,7 @@ from distopf.networks import Network9, Network30
 from distopf.dist_optimizer import LLSO, Particle
 from distopf.dist_eval import dist_eval
 from copy import copy
+import warnings
 
 def run(test_name:str):
     ray.init()
@@ -16,8 +17,8 @@ def run(test_name:str):
 
     net9 = Network9()
     net30 = Network30()
-    optim_9 = LLSO(9, net9.get_upper_bound(), net9.get_lower_bound(), SWARM_SIZE, mode)
-    optim_30 = LLSO(30, net30.get_upper_bound(), net30.get_lower_bound(), SWARM_SIZE, mode)
+    optim_9 = LLSO('net9', net9.get_upper_bound(), net9.get_lower_bound(), SWARM_SIZE, mode)
+    optim_30 = LLSO('net30', net30.get_upper_bound(), net30.get_lower_bound(), SWARM_SIZE, mode)
 
     print(f"{'#' * 15} EXP  {test_name} {'#' * 15}")
     print(f"Iter: {LOOP}\nSwarm_size: {SWARM_SIZE}\nmode: {mode}")
@@ -124,5 +125,6 @@ Iter {iter} {test_name}
     ray.shutdown()
 
 if __name__ == "__main__":
+    warnings.filterwarnings('ignore')
     for test_idx in range(20):
         run(f"case39_top_level_random_{test_idx}")
